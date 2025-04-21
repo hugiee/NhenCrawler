@@ -13,6 +13,8 @@
 NHENTAI_HOST=https://nhentai.net
 # 本地下载位置
 NHENTAI_STORAGE=/**/storage
+# 网络代理
+HTTP_PROXY=http://127.0.0.1:7890
 ```
 
 ## 计划

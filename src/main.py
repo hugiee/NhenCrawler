@@ -26,7 +26,7 @@ async def main():
         for idx, data in enumerate(result.datas):
             logger.info(f"「{idx}」: {data.title}")
         
-        await crawler.download(result.datas)
+        await crawler.start_download(result.datas)
         
     except Exception as e:
         print(e)
