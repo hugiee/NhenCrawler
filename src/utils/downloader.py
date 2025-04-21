@@ -55,16 +55,17 @@ async def download_images(url_list, save_dir):
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
         "Accept": "*/*",
     }
-    proxy = settings.DOWNLOAD_PROXY
 
     timeout = aiohttp.ClientTimeout(
         total=60,           # 整个请求超时
-        connect=30,          # 连接超时
-        sock_read=30,        # 读超时
-        sock_connect=30      # 套接字连接超时
+        connect=60,          # 连接超时
+        sock_read=60,        # 读超时
+        sock_connect=60      # 套接字连接超时
     )
 
-    async with ClientSession(headers=headers, proxy=proxy, timeout=timeout) as session:
+    async with ClientSession(headers=headers, 
+                             proxy=settings.HTTP_PROXY if settings.HTTP_PROXY else None, 
+                             timeout=timeout) as session:
         tasks = []
         for idx, url in enumerate(url_list):
             filename = os.path.basename(url)
@@ -75,13 +76,3 @@ async def download_images(url_list, save_dir):
         async with semaphore:
             # 限制并发下载数量
             await asyncio.gather(*tasks)
-
-
-if __name__ == "__main__":
-    # 示例用法
-    urls = [
-        "https://i2.nhentai.net/galleries/2938951/2.jpg",
-    ]
-    save_directory = "/Users/hugiee/PycharmProjects/spider/storage/nhentai/(ShotaFes16)) [Aisukureyo (Hoshikuzu Noyu)] 29-sai Gouhou Shota ｜29歲合法正太 (Dungeon Meshi) [Chinese] [貓漢化]"
-
-    asyncio.run(download_images(urls, save_directory))

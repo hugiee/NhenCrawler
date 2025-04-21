@@ -1,12 +1,15 @@
 from pydantic_settings import BaseSettings
+from typing import List
 
 class Settings(BaseSettings):
 
-    NHENTAI_HOST: str = 'https://nhentai.net'
+    DEFAULT_HOST: str = 'https://nhentai.net'
 
-    NHENTAI_STORAGE: str = '/**/storage'
+    DEFAULT_STORAGE: str = '/**/storage'
 
-    DOWNLOAD_PROXY: str = None
+    HTTP_PROXY: str = ''
+
+    EXT_HOST: List[str] = []
 
     class Config:
         env_file = '.env'

@@ -7,6 +7,8 @@ class TitleAndId(BaseModel):
 
     id: str
 
+    imgs: List[str] = []
+
 
 class SearchResult(BaseModel):
 
