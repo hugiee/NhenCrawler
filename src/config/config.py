@@ -6,6 +6,8 @@ class Settings(BaseSettings):
 
     NHENTAI_STORAGE: str = '/**/storage'
 
+    DOWNLOAD_PROXY: str = None
+
     class Config:
         env_file = '.env'
         env_file_encoding = 'utf-8'

@@ -5,6 +5,7 @@ import os
 import logging
 
 from aiohttp import ClientSession
+from config import settings
 
 logger = logging.getLogger('crawler')
 
@@ -54,7 +55,7 @@ async def download_images(url_list, save_dir):
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
         "Accept": "*/*",
     }
-    proxy = "http://127.0.0.1:7890"
+    proxy = settings.DOWNLOAD_PROXY
 
     timeout = aiohttp.ClientTimeout(
         total=60,           # 整个请求超时
