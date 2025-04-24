@@ -1,5 +1,6 @@
 from nhentai import NhentaiCrawler
-from config import setup_logging
+from config import setup_logging, settings
+from reader import open_reader
 import asyncio
 import logging
 
@@ -33,3 +34,5 @@ async def main():
 if __name__ == "__main__":
     setup_logging()
     asyncio.run(main())
+
+    open_reader(library_path=settings.DEFAULT_STORAGE)
