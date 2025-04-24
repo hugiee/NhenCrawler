@@ -7,7 +7,7 @@ import logging
 from aiohttp import ClientSession
 from config import settings
 
-logger = logging.getLogger('crawler')
+logger = logging.getLogger(__name__)
 
 known_ext = ['jpg', 'png', 'webp']
 
@@ -49,23 +49,23 @@ async def _do_download(session: ClientSession, url: str, save_path: str):
     return -1
 
 # 批量下载
-async def download_images(url_list, save_dir):
+async def download_images(url_list, save_dir, proxy: str = None, timeout: int = 60):
     headers = {
         "Host": "i2.nhentai.net",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
         "Accept": "*/*",
     }
 
-    timeout = aiohttp.ClientTimeout(
-        total=60,           # 整个请求超时
-        connect=60,          # 连接超时
-        sock_read=60,        # 读超时
-        sock_connect=60      # 套接字连接超时
+    client_timeout = aiohttp.ClientTimeout(
+        total=timeout,           # 整个请求超时
+        connect=timeout,          # 连接超时
+        sock_read=timeout,        # 读超时
+        sock_connect=timeout      # 套接字连接超时
     )
 
     async with ClientSession(headers=headers, 
-                             proxy=settings.HTTP_PROXY if settings.HTTP_PROXY else None, 
-                             timeout=timeout) as session:
+                             proxy=proxy, 
+                             timeout=client_timeout) as session:
         tasks = []
         for idx, url in enumerate(url_list):
             filename = os.path.basename(url)
